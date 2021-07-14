@@ -1,24 +1,31 @@
-/* eslint-disable react/prop-types */
-import React from "react"
-import { Link } from "react-router-dom"
+import React, {useEffect} from "react"
 import { ListGroup } from "react-bootstrap"
 import { Trash } from "react-bootstrap-icons"
+import ReactTooltip from 'react-tooltip';
 
 const MyBookings = ({ bookings, user, bookingService, setBookings, setMessage, setMessagevariant }) => {
+  useEffect(() => {
+    bookingService
+      .getAll()
+      .then(initialBookings => {
+        setBookings(initialBookings)
+      })
+  }, [bookingService, setBookings])
+
   let myBookings = bookings.filter(booking => booking.user.username === user.username)
 
-  const handleRemove = (id, question) => {
-    const confirmRemove = window.confirm(`Are you sure you want to delete ${question}`)
+  const handleRemove = (id) => {
+    const confirmRemove = window.confirm(`Haluatko varmasti poistaa varauksen?`)
     if(confirmRemove) {
       bookingService.remove(id).then(response => {
         setBookings(bookings.filter(booking => booking.id !== id))
         myBookings = bookings.filter(booking => booking.user.id !== user.id)
         setMessagevariant("success")
-        setMessage(`The poll ${response.dates[0] + "-" + response.dates[1]} deleted`)
+        setMessage("Varaus poistettu")
       }).catch(error => {
         console.log(error)
         setMessagevariant("danger")
-        setMessage("Error. Try again later.")
+        setMessage("Virhe. Yritä myöhemmin uudelleen.")
       })
       setTimeout(() => {
         setMessage("")
@@ -29,19 +36,19 @@ const MyBookings = ({ bookings, user, bookingService, setBookings, setMessage, s
   const BookingsListing = () => {
     return (
       <>
-        <p>From below you can find all your bookings</p>
+        <ReactTooltip id="removeBooking" place="top" effect="solid" />
+        <p>Alta löydät tekemäsi varaukset.</p>
         <ListGroup>
           {myBookings.map(booking =>
-            <ListGroup.Item key={booking.id}>{booking.dates[0] + "-" + booking.dates[1]}<button style={{ backgroundColor: "white", border: "none", marginLeft: "20px" }} onClick={() => handleRemove(booking.id, booking.dates)}><Trash /></button></ListGroup.Item>
-          )}
+            <ListGroup.Item key={booking.id}>{`${new Date(booking.dates[0]).getDate()}.${new Date(booking.dates[0]).getMonth() + 1}.${new Date(booking.dates[0]).getFullYear()} - ${new Date(booking.dates[1]).getDate()}.${new Date(booking.dates[1]).getMonth() + 1}.${new Date(booking.dates[0]).getFullYear()}`}<button style={{ backgroundColor: "white", border: "none", marginLeft: "20px" }} onClick={() => handleRemove(booking.id)} data-tip="Poista varaus" data-for="removeBooking"><Trash /></button></ListGroup.Item>          )}
         </ListGroup>
       </>
     )
   }
   return (
     <div>
-      <h1>My bookings</h1>
-      {myBookings.length > 0 ? <BookingsListing /> : <p>You have no bookings yet.</p>}
+      <h1>Varaukseni</h1>
+      {myBookings.length > 0 ? <BookingsListing /> : <p>Sinulla ei ole varauksia.</p>}
     </div>
   )
 }

@@ -20,13 +20,13 @@ const Header = ({ user, logout }) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            {user === null && <LinkContainer to="/login"><Nav.Link>Sign up / login</Nav.Link></LinkContainer>}
+            <Nav.Link href="/">Kalenteri</Nav.Link>
+            {user === null && <LinkContainer to="/login"><Nav.Link>Rekisteröidy / kirjaudu</Nav.Link></LinkContainer>}
           </Nav>
           <Nav>
             {user !== null && <NavDropdown title={user.name} id="collasible-nav-dropdown">
-              <LinkContainer to="/mybookings"><NavDropdown.Item>My bookings</NavDropdown.Item></LinkContainer>
-              <NavDropdown.Item onClick={ logout }>Log out</NavDropdown.Item>
+              <LinkContainer to="/mybookings"><NavDropdown.Item>Omat varaukset</NavDropdown.Item></LinkContainer>
+              <NavDropdown.Item onClick={ logout }>Kirjaudu ulos</NavDropdown.Item>
             </NavDropdown>}
 
           </Nav>

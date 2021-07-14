@@ -21,11 +21,11 @@ const Login = ( { loginService, setUsername, username, setPassword, password, se
       setUsername("")
       setPassword("")
       setMessagevariant("success")
-      setMessage(`${username} logged in successfully!`)
+      setMessage(`${username} kirjattu sisään onnistuneesti!`)
     } catch (exception) {
       console.log(exception)
       setMessagevariant("danger")
-      setMessage("Wrong username or password")
+      setMessage("Väärä käyttäjänimi tai salasana")
     }
     setTimeout(() => {
       setMessage(null)
@@ -34,28 +34,28 @@ const Login = ( { loginService, setUsername, username, setPassword, password, se
 
   return (
     <>
-      <h3>Login</h3>
-      <p>Log in if you have an account</p>
+      <h3>Kirjaudu</h3>
+      <p>Kirjaudu sisään jos olet jo aiemmin rekisteröitynyt</p>
       <Row className="justify-content-center">
         <Form onSubmit={handleLogin}>
           <Form.Group>
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Käyttäjänimi:</Form.Label>
             <Form.Control required value={username} key="1" onChange={({ target }) => setUsername(target.value)} />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Password:</Form.Label>
+            <Form.Label>Salasana:</Form.Label>
             <Form.Control required type="password" value={password} onChange={({ target }) => setPassword(target.value)} />
           </Form.Group>
           <Button variant="primary" type="submit">
-            Submit
+            Kirjaudu
           </Button>
         </Form>
       </Row>
       <hr />
-      <h3 style={{ marginTop: "50px" }}>Sign up</h3>
-      <p>Or sign up if you dont have an account already</p>
+      <h3 style={{ marginTop: "50px" }}>Rekisteröidy</h3>
+      <p>Rekisteröidy jos sinulla ei ole vielä tunnuksia</p>
       <Link to="/signup"><Button variant="primary" size="lg">
-      Sign up
+      Rekisteröidy
       </Button>
       </Link>
     </>  )

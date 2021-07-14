@@ -45,3 +45,16 @@ h1, h2, h3 {
   color: white;
   padding: 10px 20px 10px 20px;
 }
+
+.react-calendar__month-view__days__day--weekend {
+  color: black !important;
+}
+
+.disabledTile {
+  color: black;
+  background-color: #ffe8e7 !important;
+}
+
+.availableTile {
+  background-color: lightgreen !important;
+}

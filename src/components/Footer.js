@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <p>This app is built by <a href="https://joonaskinnunen.github.io/">@joonaskinnunen</a><br />
-      Github repository: <a href="https://github.com/joonaskinnunen/voting-app">joonaskinnunen/voting-app</a></p>
+      Github repository: <a href="https://github.com/joonaskinnunen/booking-app">joonaskinnunen/booking-app</a></p>
     </div>
   )
 }

@@ -49,12 +49,18 @@ const App = () => {
         const stopDate = new Date(initialBookings[i].dates[1])
         console.log(currentDate)
         console.log(stopDate)
+        console.log(initialBookings)
         while (currentDate <= stopDate) {
-            dateArray.push(new Date (currentDate))
+            dateArray.push({
+              date: new Date(currentDate),
+              booker: initialBookings[i].user.name
+            }
+              )
             currentDate.setDate(currentDate.getDate() + 1)
         }
       }
       setDisabledDays(dateArray)
+      console.log(disabledDays)
       })
   }, [])
 
@@ -66,10 +72,10 @@ const App = () => {
     loginService.logout()
     setUser(null)
     setMessageVariant("success")
-    setMessage("Logged out successfully")
+    setMessage("Uloskirjautuminen onnistui")
     setTimeout(() => {
       setMessage("")
-    }, 3000)
+    }, 5000)
   }
 
   console.log(disabledDays)
@@ -81,15 +87,15 @@ const App = () => {
           <Header user={ user } logout={ handleLogout } />
           <Switch>
             <Route path="/login">
-              {user !== null ? <Redirect to="/mypolls" /> : <Login loginService={loginService} user={user} setUser={setUser} username={username} setUsername={setUsername} password={password} setPassword={setPassword} setMessage={setMessage} setMessagevariant={setMessageVariant} />}
+              {user !== null ? <Redirect to="/" /> : <Login loginService={loginService} user={user} setUser={setUser} username={username} setUsername={setUsername} password={password} setPassword={setPassword} setMessage={setMessage} setMessagevariant={setMessageVariant} />}
             </Route>
             <Route path="/signup">
-              {user !== null ? <Redirect to="/mypolls" /> : <Signup signupService={signupService} setMessage={setMessage} setMessagevariant={setMessageVariant} />}
+              {user !== null ? <Redirect to="/" /> : <Signup signupService={signupService} setMessage={setMessage} setMessagevariant={setMessageVariant} />}
             </Route>
             <Route path="/mybookings">
-              {user !== null ? <MyBookings bookings={bookings} user={user} bookingService={bookingService} setBookings={setBookings} setMessage={setMessage} setMessagevariant={setMessageVariant} /> : <p><Link to="/login">Login</Link> to see your bookings.</p> }
+              {user !== null ? <MyBookings bookings={bookings} user={user} bookingService={bookingService} setBookings={setBookings} setMessage={setMessage} setMessagevariant={setMessageVariant} /> : <p><Link to="/login">Kirjaudu sisään</Link> nähdäksesi varauksesi.</p> }
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <Home bookings={bookings} setBookings={setBookings} message={message} setMessage={setMessage} setMessagevariant={setMessageVariant} user={user} disabledDays={disabledDays} />
             </Route>
           </Switch>
